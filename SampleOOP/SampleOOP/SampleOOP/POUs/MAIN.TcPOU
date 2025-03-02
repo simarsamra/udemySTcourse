@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{5241c702-a715-44b8-a332-53ad00ead884}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	motor1 : Motor;
+	motor2 : Motor;
+	motor3 : Motor;
+	motor1Variables : MotorVariables;
+	motor2Variables : MotorVariables;
+	motor3Variables : MotorVariables;
+	
+	
+	overload : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[motor1(Start := motor1Variables.start, Stop := motor1Variables.stop, Overload := motor1Variables.overload, Coil => motor1Variables.coil);
+motor2(Start := motor2Variables.start, Stop := motor2Variables.stop, Overload := motor2Variables.overload, Coil => motor2Variables.coil);
+motor3(Start := motor3Variables.start, Stop := motor3Variables.stop, Overload := motor3Variables.overload, Coil => motor3Variables.coil);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="26" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

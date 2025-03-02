@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="MotorVariables" Id="{8526ca8d-3f7c-4c59-8fda-2c4d467d810b}">
+    <Declaration><![CDATA[TYPE MotorVariables :
+STRUCT
+	start : BOOL;
+	stop : BOOL;
+	overload : BOOL;
+	coil : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
