@@ -3,30 +3,23 @@
   <POU Name="MAIN" Id="{5241c702-a715-44b8-a332-53ad00ead884}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	motor1 : Motor;
-	motor2 : Motor;
-	motor3 : Motor;
-	motor1InputVariables : MotorInputVariables;
-	motor2InputVariables : MotorInputVariables;
-	motor3InputVariables : MotorInputVariables;
 	
-	motor1OutputVariables : MotorOutputVariables;
-	motor2OutputVariables : MotorOutputVariables;
-	motor3OutputVariables : MotorOutputVariables;
-	
-	
-	overload : INT;
+	Motors : ARRAY [1..3] OF Motor;
+	MotorsI : ARRAY [1..3] OF MotorInputVariables;
+	MotorsO : ARRAY [1..3] OF MotorOutputVariables;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[motor1(MotorInputs := motor1InputVariables, MotorOutputs => motor1OutputVariables);
-motor2(MotorInputs := motor2InputVariables, MotorOutputs => motor2OutputVariables);
-motor3(MotorInputs := motor3InputVariables, MotorOutputs => motor3OutputVariables);
+      <ST><![CDATA[Motors[1](MotorInputs := MotorsI[1], MotorOutputs => MotorsO[1]);
+Motors[2](MotorInputs := MotorsI[2], MotorOutputs => MotorsO[2]);
+Motors[3](MotorInputs := MotorsI[3], MotorOutputs => MotorsO[3]);
+
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="27" Count="0" />
-      <LineId Id="45" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="51" Count="0" />
       <LineId Id="44" Count="0" />
     </LineIds>
   </POU>
