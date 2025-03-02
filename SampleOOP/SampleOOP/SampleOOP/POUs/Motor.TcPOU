@@ -3,24 +3,27 @@
   <POU Name="Motor" Id="{8e1e9767-7348-4992-838e-044a25fffec2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Motor
 VAR_INPUT
-	Start : BOOL;
-	Stop : BOOL;
-	Overload : BOOL;
+	MotorInputs : MotorInputVariables;
 END_VAR
 VAR_OUTPUT
-	Coil : BOOL;
+	MotorOutputs : MotorOutputVariables;
 END_VAR
 VAR
+	Start : BOOL;
+	Stop : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF Start AND NOT Stop AND NOT Overload THEN
-	coil := TRUE;
+      <ST><![CDATA[Start := MotorInputs.start;
+Stop := MotorInputs.stop;
+IF Start AND NOT Stop AND NOT MotorInputs.overload THEN
+	MotorOutputs.coil := TRUE;
 ELSE
-	Coil := FALSE;
+	MotorOutputs.coil := FALSE;
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Motor">
+      <LineId Id="32" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="16" Count="1" />
