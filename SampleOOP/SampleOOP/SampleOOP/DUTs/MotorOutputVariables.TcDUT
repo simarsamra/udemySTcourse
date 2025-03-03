@@ -4,6 +4,8 @@
     <Declaration><![CDATA[TYPE MotorOutputVariables :
 STRUCT
 	coil : BOOL;
+	ovld : BOOL;
+	fault : BOOL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

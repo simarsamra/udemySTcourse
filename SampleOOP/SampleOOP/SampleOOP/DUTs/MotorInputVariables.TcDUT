@@ -6,6 +6,7 @@ STRUCT
 	start : BOOL;
 	stop : BOOL;
 	overload : BOOL;
+	reset : BOOL := FALSE;
 	
 END_STRUCT
 END_TYPE
