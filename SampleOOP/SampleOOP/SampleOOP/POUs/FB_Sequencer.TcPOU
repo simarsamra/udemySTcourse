@@ -27,34 +27,38 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[Ini_Motors();
-
-MotorsI[1].start := generalStart;
-
-IF MotorsO[serialIndex].coil AND (NOT SUCCEED) AND NOT FAIL THEN
-	IF serialIndex > NUM_MOTORS THEN
-		serialIndex := 1;
-	ELSE
-		serialIndex := serialIndex + 1;
-		MotorsI[serialIndex].start := TRUE;
-	END_IF
-END_IF
-
-IF serialIndex - 1 = NUM_MOTORS THEN
-	SUCCEED := TRUE;
-	serialIndex := 1;
-END_IF
+mGeneralStop();
+mFaultHandler();
+mSequenceStart();
 
 
-stopTrig(CLK := generalStop);
 
-IF  stopTrig.Q THEN
-	SUCCEED := FALSE;
-	FOR index := 1 TO NUM_MOTORS BY 1 DO
-		MotorsI[index].start := FALSE;
-	END_FOR
-END_IF
 
-FOR index := 1 TO NUM_MOTORS BY 1 DO
+
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="Ini_Motors" Id="{3d1fec7d-dc23-422b-b4cc-783784f3787f}">
+      <Declaration><![CDATA[METHOD Ini_Motors : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR index := 1 TO NUM_MOTORS BY 1 DO
+	MotorsI[index].stop := generalStop;
+	MotorsI[index].waitTime := T#2S;
+	Motors[index](MotorInputs := MotorsI[index], MotorOutputs => MotorsO[index]);
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mFaultHandler" Id="{966aa395-a523-433f-a0c1-03b4ba08fcff}">
+      <Declaration><![CDATA[METHOD mFaultHandler : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR index := 1 TO NUM_MOTORS BY 1 DO
 	IF MotorsI[index].overload THEN
 		FAIL := TRUE;
 		EXIT;
@@ -73,26 +77,71 @@ IF resetTrig.Q THEN
 	FAIL := FALSE;
 	generalStop := FALSE;
 END_IF]]></ST>
-    </Implementation>
-    <Method Name="Ini_Motors" Id="{3d1fec7d-dc23-422b-b4cc-783784f3787f}">
-      <Declaration><![CDATA[METHOD Ini_Motors : BOOL
+      </Implementation>
+    </Method>
+    <Method Name="mGeneralStop" Id="{0481f4b0-2d57-49ae-9746-b885b04f77d9}">
+      <Declaration><![CDATA[METHOD mGeneralStop : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR index := 1 TO NUM_MOTORS BY 1 DO
-	MotorsI[index].stop := generalStop;
-	MotorsI[index].waitTime := T#2S;
-	Motors[index](MotorInputs := MotorsI[index], MotorOutputs => MotorsO[index]);
-END_FOR]]></ST>
+        <ST><![CDATA[stopTrig(CLK := generalStop);
+
+IF  stopTrig.Q THEN
+	SUCCEED := FALSE;
+	FOR index := 1 TO NUM_MOTORS BY 1 DO
+		MotorsI[index].start := FALSE;
+	END_FOR
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mSequenceStart" Id="{40fd3afa-ac07-4299-8241-2914e967e420}">
+      <Declaration><![CDATA[METHOD mSequenceStart : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MotorsI[1].start := generalStart;
+
+IF MotorsO[serialIndex].coil AND (NOT SUCCEED) AND NOT FAIL THEN
+	IF serialIndex > NUM_MOTORS THEN
+		serialIndex := 1;
+	ELSE
+		serialIndex := serialIndex + 1;
+		MotorsI[serialIndex].start := TRUE;
+	END_IF
+END_IF
+
+IF serialIndex - 1 = NUM_MOTORS THEN
+	SUCCEED := TRUE;
+	serialIndex := 1;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Sequencer">
-      <LineId Id="35" Count="45" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="61" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Sequencer.Ini_Motors">
       <LineId Id="6" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Sequencer.mFaultHandler">
+      <LineId Id="6" Count="17" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Sequencer.mGeneralStop">
+      <LineId Id="6" Count="6" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Sequencer.mSequenceStart">
+      <LineId Id="6" Count="13" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
