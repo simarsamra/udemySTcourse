@@ -6,128 +6,56 @@ VAR CONSTANT
 	NUM_MOTORS : INT := 5;
 END_VAR
 VAR
+	Motor1 : Motor;
+	Motor2 : Motor;
 	
-	Motors : ARRAY [1..NUM_MOTORS] OF Motor;
-	MotorsI : ARRAY [1..NUM_MOTORS] OF MotorInputVariables;
-	MotorsO : ARRAY [1..NUM_MOTORS] OF MotorOutputVariables;
+	Temp : INT;
+	 
+	ovld1 : BOOL;
+	ovld2 : BOOL;
 	
-	serialIndex : INT := 1;
-	index : INT;
-	
-	generalStart : BOOL;
-	generalStop : BOOL;
-	resetFault : BOOL;
-	
-	stopTrig : R_TRIG;
-	resetTrig : R_TRIG;
-	
-	SUCCEED: BOOL;
-	FAIL: BOOL;
 END_VAR
 
 
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FOR index := 1 TO NUM_MOTORS BY 1 DO
-	MotorsI[index].stop := generalStop;
-	MotorsI[index].waitTime := T#2S;
-	Motors[index](MotorInputs := MotorsI[index], MotorOutputs => MotorsO[index]);
-END_FOR
+      <ST><![CDATA[Motor1(Ovld := ovld1);
+Motor2(Ovld := ovld2);
 
-MotorsI[1].start := generalStart;
-
-IF MotorsO[serialIndex].coil AND (NOT SUCCEED) AND NOT FAIL THEN
-	IF serialIndex > NUM_MOTORS THEN
-		serialIndex := 1;
-	ELSE
-		serialIndex := serialIndex + 1;
-		MotorsI[serialIndex].start := TRUE;
-	END_IF
+IF Temp < 100 THEN
+	Motor1.Stop();
+	Motor2.Stop();
+END_IF
+IF Temp > 100 AND Temp < 200 THEN
+	Motor1.Start();
 END_IF
 
-IF serialIndex - 1 = NUM_MOTORS THEN
-	SUCCEED := TRUE;
-	serialIndex := 1;
+IF Temp > 200 THEN
+	Motor1.Stop();
+	Motor2.Start();
 END_IF
 
-
-stopTrig(CLK := generalStop);
-
-IF  stopTrig.Q THEN
-	SUCCEED := FALSE;
-	FOR index := 1 TO NUM_MOTORS BY 1 DO
-		MotorsI[index].start := FALSE;
-	END_FOR
-END_IF
-
-FOR index := 1 TO NUM_MOTORS BY 1 DO
-	IF MotorsI[index].overload THEN
-		FAIL := TRUE;
-		EXIT;
-	END_IF
-END_FOR
-
-IF FAIL THEN
-	FOR index := 1 TO NUM_MOTORS BY 1 DO
-		motorsI[index].start := FALSE;
-		generalStop := TRUE;
-	END_FOR
-END_IF
-
-resetTrig(CLK := resetFault);
-IF resetTrig.Q THEN
-	FAIL := FALSE;
-	generalStop := FALSE;
-END_IF
-
-
- ]]></ST>
+Motor1.OvldSet();
+Motor2.OvldSet();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="55" Count="0" />
-      <LineId Id="179" Count="0" />
-      <LineId Id="186" Count="0" />
-      <LineId Id="185" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="187" Count="0" />
-      <LineId Id="191" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="195" Count="0" />
-      <LineId Id="197" Count="5" />
-      <LineId Id="204" Count="0" />
-      <LineId Id="203" Count="0" />
-      <LineId Id="205" Count="2" />
-      <LineId Id="210" Count="1" />
-      <LineId Id="209" Count="0" />
-      <LineId Id="213" Count="0" />
-      <LineId Id="212" Count="0" />
-      <LineId Id="214" Count="0" />
-      <LineId Id="216" Count="2" />
-      <LineId Id="215" Count="0" />
-      <LineId Id="221" Count="0" />
-      <LineId Id="220" Count="0" />
-      <LineId Id="222" Count="0" />
-      <LineId Id="224" Count="0" />
-      <LineId Id="226" Count="0" />
-      <LineId Id="225" Count="0" />
-      <LineId Id="223" Count="0" />
-      <LineId Id="228" Count="0" />
-      <LineId Id="227" Count="0" />
-      <LineId Id="229" Count="0" />
-      <LineId Id="231" Count="0" />
-      <LineId Id="233" Count="0" />
-      <LineId Id="232" Count="0" />
-      <LineId Id="230" Count="0" />
-      <LineId Id="238" Count="0" />
-      <LineId Id="237" Count="0" />
-      <LineId Id="239" Count="1" />
-      <LineId Id="242" Count="0" />
-      <LineId Id="241" Count="0" />
-      <LineId Id="236" Count="0" />
-      <LineId Id="235" Count="0" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="280" Count="1" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="282" Count="0" />
       <LineId Id="208" Count="0" />
+      <LineId Id="272" Count="1" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="294" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -3,46 +3,108 @@
   <POU Name="Motor" Id="{8e1e9767-7348-4992-838e-044a25fffec2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Motor
 VAR_INPUT
-	MotorInputs : MotorInputVariables;
+	StartB : BOOL;
+	StopB : BOOL;
+	Ovld : BOOL;
+	OvldRst : BOOL;
+	
 END_VAR
 VAR_OUTPUT
-	MotorOutputs : MotorOutputVariables;
+	Coil : BOOL;
 END_VAR
 VAR
-	waitTimer : TON;
-	setReset : RS;
-	RS_Output : BOOL;
+	FaultStatus : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[setReset(SET := MotorInputs.start, RESET1 := MotorInputs.stop, Q1 => RS_Output);
-
-
-IF RS_Output AND MotorInputs.overload = FALSE THEN
-	waitTimer(IN := TRUE, pt := MotorInputs.waitTime);
-	IF waitTimer.Q THEN
-		MotorOutputs.coil := TRUE;
-	END_IF
-END_IF
-
-IF MotorInputs.stop OR MotorInputs.overload THEN
-	waitTimer(IN := FALSE);
-	MotorOutputs.coil := FALSE;
-END_IF]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="OvldReset" Id="{b6d849b8-b6e8-4eb8-b8a4-d6768dc4f0c2}">
+      <Declaration><![CDATA[METHOD OvldReset : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF OvldReset THEN
+	FaultStatus := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OvldSet" Id="{ad6c056e-e826-4421-883c-969957b89ff9}">
+      <Declaration><![CDATA[METHOD OvldSet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Ovld THEN
+	FaultStatus := TRUE;
+	Stop();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{aeb0c8f5-39d2-4234-89b7-ae6cf4072521}">
+      <Declaration><![CDATA[METHOD Start : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartManual" Id="{9e0c3f6b-1c17-4e1a-aaf3-db760e0d9239}">
+      <Declaration><![CDATA[METHOD StartManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF StartB THEN 
+	Coil := true;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{1b995dda-0dfd-4c52-aa07-a70eb0f85315}">
+      <Declaration><![CDATA[METHOD Stop : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := false;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopManual" Id="{73dbe7ba-7744-43e7-9341-eb762aed3da5}">
+      <Declaration><![CDATA[METHOD StopManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF StopB THEN
+	Coil := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="Motor">
-      <LineId Id="40" Count="0" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="78" Count="2" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="85" Count="0" />
       <LineId Id="84" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.OvldReset">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="Motor.OvldSet">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.Start">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.StartManual">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="Motor.Stop">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.StopManual">
+      <LineId Id="5" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>
