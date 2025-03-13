@@ -6,6 +6,7 @@ VAR CONSTANT
 	NUM_MOTORS : INT := 5;
 END_VAR
 VAR
+	Mode : BOOL;
 	Motor1 : Motor;
 	Motor2 : Motor;
 	
@@ -14,33 +15,43 @@ VAR
 	ovld1 : BOOL;
 	ovld2 : BOOL;
 	
+	start1 : BOOL;
+	start2 : BOOL;
+	
+	stop1 : BOOL;
+	stop2 : BOOL;
 END_VAR
 
 
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Motor1(Ovld := ovld1);
-Motor2(Ovld := ovld2);
+      <ST><![CDATA[IF Mode THEN
 
-IF Temp < 100 THEN
-	Motor1.Stop();
-	Motor2.Stop();
-END_IF
-IF Temp > 100 AND Temp < 200 THEN
-	Motor1.Start();
-END_IF
-
-IF Temp > 200 THEN
-	Motor1.Stop();
-	Motor2.Start();
-END_IF
-
-Motor1.OvldSet();
-Motor2.OvldSet();]]></ST>
+	IF Temp < 100 THEN
+		Motor1.Stop();
+		Motor2.Stop();
+	END_IF
+	IF Temp > 100 AND Temp < 200 THEN
+		Motor1.Start();
+	END_IF
+	
+	IF Temp > 200 THEN
+		Motor1.Stop();
+		Motor2.Start();
+	END_IF
+	
+	Motor1.OvldSet(ovld1);
+	Motor2.OvldSet(ovld2);
+ELSE
+	Motor1.StartManual(start1);
+	Motor2.StartManual(start2);
+	Motor1.StopManual(stop1);
+	Motor2.StopManual(stop2);
+	
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="287" Count="0" />
       <LineId Id="291" Count="0" />
       <LineId Id="288" Count="0" />
       <LineId Id="280" Count="1" />
@@ -56,6 +67,12 @@ Motor2.OvldSet();]]></ST>
       <LineId Id="293" Count="0" />
       <LineId Id="292" Count="0" />
       <LineId Id="294" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="301" Count="0" />
+      <LineId Id="304" Count="1" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="302" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

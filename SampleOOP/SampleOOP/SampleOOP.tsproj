@@ -10,7 +10,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{11A17749-69F3-4449-BDA7-080D28329ED5}" Name="SampleOOP" PrjFilePath="SampleOOP\SampleOOP.plcproj" TmcFilePath="SampleOOP\SampleOOP.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="SampleOOP\SampleOOP.tmc" TmcHash="{AB64871D-32F6-018C-E839-2330FECF58EA}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="SampleOOP\SampleOOP.tmc" TmcHash="{6B5E02F9-FCBA-C05C-A799-E1DAC3D79C96}">
 					<Name>SampleOOP Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
