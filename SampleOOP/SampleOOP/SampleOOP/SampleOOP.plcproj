@@ -18,12 +18,6 @@
     <LibraryReferences>{0b998bb4-e2cd-422d-a9af-ed67cda70243}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\MotorOutputVariables.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\MotorInputVariables.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>

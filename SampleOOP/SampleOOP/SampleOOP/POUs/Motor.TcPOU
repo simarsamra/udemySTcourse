@@ -1,41 +1,166 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="Motor" Id="{e8ee9352-a743-455f-ac8a-a3ac02390bcd}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Motor
 VAR_INPUT
-	Overload : BOOL;
 	
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	FaultStatus : BOOL;
+	Icoil : BOOL;
+	Iovld : BOOL;
+	Ifault : BOOL;
 	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="FaultSet" Id="{2ed8e993-bc90-4220-9bd2-53eeae8cb377}">
-      <Declaration><![CDATA[METHOD FaultSet : BOOL
+    <Property Name="Coil" Id="{7e6c1b09-541a-4df1-8ffc-0b6879825343}">
+      <Declaration><![CDATA[PROPERTY Coil : Bool]]></Declaration>
+      <Get Name="Get" Id="{e80e3561-0463-45d5-a6c3-7ef43e3a3c89}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Coil := Icoil;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f332fa6d-a6bb-4506-bafe-c7d447119f75}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Icoil := Coil;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="FaultStatus" Id="{a24d7210-f90b-46af-9d01-07b6bc700aeb}">
+      <Declaration><![CDATA[PROPERTY FaultStatus : BOOL]]></Declaration>
+      <Get Name="Get" Id="{4730b095-c89c-4fd4-9667-303a21311c47}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FaultStatus := Ifault;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{cda24041-3922-4c79-9dd3-05c7655a50c2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Ifault := FaultStatus;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="OVLD" Id="{22e13cc8-8333-481e-a92c-bbf2d8c4d3a3}">
+      <Declaration><![CDATA[PROPERTY OVLD : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a098f2f3-fc02-452a-85d7-af8d49d7bdaa}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[OVLD := Iovld;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{0cbf3131-e0be-48df-acc6-23034e02ec2e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Icoil := OVLD;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="OvlsSet" Id="{98bbe066-4135-4d49-9f58-f81faf1c9dd3}">
+      <Declaration><![CDATA[METHOD OvlsSet
 VAR_INPUT
-	Overload : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF THIS^.Overload THEN
+        <ST><![CDATA[IF OVLD THEN 
+	Stop();
 	FaultStatus := TRUE;
-ELSE
-	FaultStatus := FALSE;
+	
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{b3c30ffd-83c8-4a27-87c3-cf941fe4e718}">
+      <Declaration><![CDATA[METHOD Start
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartManual" Id="{0e535194-79e6-4be3-9d88-c6b8503aa105}">
+      <Declaration><![CDATA[METHOD StartManual
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop" Id="{ee40cada-c7f2-42c1-ae42-dfaa9b095ad4}">
+      <Declaration><![CDATA[METHOD Stop
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := FALSE;
+FaultStatus := FALSE;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Motor">
       <LineId Id="26" Count="0" />
     </LineIds>
-    <LineIds Name="Motor.FaultSet">
-      <LineId Id="7" Count="3" />
+    <LineIds Name="Motor.Coil.Get">
+      <LineId Id="2" Count="0" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.Coil.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.FaultStatus.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.FaultStatus.Set">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.OVLD.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.OVLD.Set">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.OvlsSet">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.Start">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.StartManual">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.Stop">
+      <LineId Id="5" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>

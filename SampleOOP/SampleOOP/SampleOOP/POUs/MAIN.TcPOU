@@ -1,21 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="MAIN" Id="{5241c702-a715-44b8-a332-53ad00ead884}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	Motor1 : Motor;
-	Overload : BOOL;
-	OverloadMethod : BOOL;
 	
+	// variables that will be linked to physical IOs
+	coil : BOOL;
+	i_ovld : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Motor1(Overload := Overload);
-Motor1.FaultSet(OverloadMethod);
-]]></ST>
+      <ST><![CDATA[coil := Motor1.Coil;
+Motor1.OVLD := i_ovld;
+
+Motor1.Start();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="302" Count="0" />
-      <LineId Id="316" Count="1" />
+      <LineId Id="327" Count="0" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="328" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
