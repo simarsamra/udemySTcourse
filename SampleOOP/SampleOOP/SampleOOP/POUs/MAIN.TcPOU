@@ -3,22 +3,12 @@
   <POU Name="MAIN" Id="{5241c702-a715-44b8-a332-53ad00ead884}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	Motor1 : Motor;
 	
-	// variables that will be linked to physical IOs
-	coil : BOOL;
-	i_ovld : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[coil := Motor1.Coil;
-Motor1.OVLD := i_ovld;
-
-Motor1.Start();]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="302" Count="0" />
-      <LineId Id="327" Count="0" />
-      <LineId Id="329" Count="0" />
       <LineId Id="328" Count="0" />
     </LineIds>
   </POU>

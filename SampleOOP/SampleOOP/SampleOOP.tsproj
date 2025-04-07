@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.44">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.66">
 	<Project ProjectGUID="{8EEEC3D4-742F-4BDA-8C8A-474334B2D26B}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Tasks>
@@ -10,12 +10,12 @@
 		</System>
 		<Plc>
 			<Project GUID="{11A17749-69F3-4449-BDA7-080D28329ED5}" Name="SampleOOP" PrjFilePath="SampleOOP\SampleOOP.plcproj" TmcFilePath="SampleOOP\SampleOOP.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="SampleOOP\SampleOOP.tmc" TmcHash="{B6BD49E0-05F3-4EF5-C369-DDDEAB53A2FC}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="SampleOOP\SampleOOP.tmc" TmcHash="{E58CE893-44E5-9A48-814D-A765132283A8}">
 					<Name>SampleOOP Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
-							<Id NeedCalleeCall="true">0</Id>
+							<Id>0</Id>
 							<Name>PlcTask</Name>
 							<ManualConfig>
 								<OTCID>#x02010030</OTCID>

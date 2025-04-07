@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ThreePhaseDevice" Id="{b8946281-48f9-4e67-9759-4dc34cb9618e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ThreePhaseDevice
+VAR_INPUT
+	Ovld : BOOL;
+
+END_VAR
+VAR_OUTPUT
+	Coil : BOOL;
+END_VAR
+
+VAR
+	InternalFaultStatus : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FaultRST" Id="{7c1e35fd-1691-43bf-a4cc-718fc81c26e2}">
+      <Declaration><![CDATA[METHOD FaultRST : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Ovld THEN 
+	FaultStatus := false;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FaultSet" Id="{c185d64b-9c37-4ac4-b8a8-235e20ece85a}">
+      <Declaration><![CDATA[METHOD FaultSet : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Ovld THEN
+	FaultStatus := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FaultStatus" Id="{b593e086-5c8a-425e-9ea3-c68048df9c05}">
+      <Declaration><![CDATA[PROPERTY FaultStatus : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c8919eca-b2d3-43f1-9d09-1b51495fd21d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FaultStatus := InternalFaultStatus;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{53ba1f5d-7f94-472a-8a8e-b3a56d0b88de}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InternalFaultStatus := FaultStatus;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="TurnOff" Id="{da13e958-3919-44f8-952f-5d935d450d1b}">
+      <Declaration><![CDATA[METHOD TurnOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := false;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TurnOn" Id="{d33fd95f-05a3-4696-95ed-c288c7001f23}">
+      <Declaration><![CDATA[METHOD TurnOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Coil := true;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ThreePhaseDevice">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.FaultRST">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.FaultSet">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.FaultStatus.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.FaultStatus.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.TurnOff">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ThreePhaseDevice.TurnOn">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

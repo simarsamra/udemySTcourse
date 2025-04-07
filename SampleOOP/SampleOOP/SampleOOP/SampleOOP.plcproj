@@ -27,6 +27,9 @@
     <Compile Include="POUs\Motor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\ThreePhaseDevice.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
